@@ -16,6 +16,7 @@ export default function NomeSenhaScreen() {
   const [guestName, setGuestName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [position, setPosition] = useState<number | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,9 +28,16 @@ export default function NomeSenhaScreen() {
 
     try {
       setIsLoading(true);
-      await axios.post("http://localhost:8000/guest", {
+
+      const response = await axios.post("http://localhost:8000/guest", {
         name: guestName,
       });
+
+      const createdGuest = response.data;
+
+      console.log("Guest criado:", createdGuest);
+
+      setPosition(createdGuest.position);
       setShowDialog(true);
       setGuestName("");
     } catch (error) {
@@ -43,12 +51,18 @@ export default function NomeSenhaScreen() {
   return (
     <>
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent>
+        <DialogContent className="bg-zinc-100">
           <DialogHeader>
             <DialogTitle>Senha retirada com sucesso!</DialogTitle>
-            <DialogDescription>
-              Sua senha foi gerada. Por favor, aguarde ser chamado.
+            <DialogDescription className="text-lg text-zinc-700 mt-8">
+              Sua senha é:{" "}
+              <span className="font-semibold text-blue-600 text-xl">
+                {position}
+              </span>
             </DialogDescription>
+            <p className="mt-6 text-justify text-base text-zinc-700">
+              Por gentileza, lembre-se de sua senha. Tenha um ótimo atendimento!
+            </p>
           </DialogHeader>
         </DialogContent>
       </Dialog>
