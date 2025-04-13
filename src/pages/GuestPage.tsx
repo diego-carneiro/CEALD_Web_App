@@ -3,13 +3,13 @@ import GuestTickets from "@/components/GuestTickets";
 import axios from "axios";
 import dayjs from "dayjs";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogDescription,
+// } from "@/components/ui/dialog";
 
 export default function GuestPage() {
   const [isOpen, setIsOpen] = useState<boolean | null>(null);
