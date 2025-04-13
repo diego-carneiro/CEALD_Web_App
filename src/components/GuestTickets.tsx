@@ -75,7 +75,7 @@ export default function NomeSenhaScreen() {
           <div className="flex justify-center">
             <img
               className="w-40 md:w-52"
-              src="src/assets/img/cealdlogo.png"
+              src="/assets/img/cealdlogo.png"
               alt="Logo CEALD"
             />
           </div>
