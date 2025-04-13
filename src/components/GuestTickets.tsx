@@ -30,7 +30,7 @@ export default function NomeSenhaScreen() {
       setIsLoading(true);
 
       const response = await axios.post(
-        "http://cealdapi-production.up.railway.app/guest",
+        "https://cealdapi-production.up.railway.app/guest",
         {
           name: guestName,
         }
