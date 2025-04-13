@@ -17,11 +17,13 @@ export default function GuestPage() {
   useEffect(() => {
     const checkAvailability = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/is-open");
+        const response = await axios.get(
+          "http://cealdapi-production.up.railway.app/is-open"
+        );
         setIsOpen(response.data.isOpen);
       } catch (error) {
         console.error("Erro ao verificar horário:", error);
-        setIsOpen(false); // fallback seguro
+        setIsOpen(false);
       }
     };
 
@@ -49,23 +51,25 @@ export default function GuestPage() {
     return null; // ou loading
   }
 
-  return (
-    <>
-      {!isOpen ? (
-        <Dialog open>
-          <DialogContent className="bg-zinc-100">
-            <DialogHeader>
-              <DialogTitle>Horário Encerrado</DialogTitle>
-              <DialogDescription className="text-zinc-700 text-justify mt-2">
-                O intervalo para a retirada de senhas se encerrou. Por favor,
-                volte em outro horário.
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      ) : (
-        <GuestTickets />
-      )}
-    </>
-  );
+  // return (
+  //   <>
+  //     {!isOpen ? (
+  //       <Dialog open>
+  //         <DialogContent className="bg-zinc-100">
+  //           <DialogHeader>
+  //             <DialogTitle>Horário Encerrado</DialogTitle>
+  //             <DialogDescription className="text-zinc-700 text-justify mt-2">
+  //               O intervalo para a retirada de senhas se encerrou. Por favor,
+  //               volte em outro horário.
+  //             </DialogDescription>
+  //           </DialogHeader>
+  //         </DialogContent>
+  //       </Dialog>
+  //     ) : (
+  //       <GuestTickets />
+  //     )}
+  //   </>
+  // );
+
+  return <GuestTickets></GuestTickets>;
 }

@@ -29,9 +29,12 @@ export default function NomeSenhaScreen() {
     try {
       setIsLoading(true);
 
-      const response = await axios.post("http://localhost:8000/guest", {
-        name: guestName,
-      });
+      const response = await axios.post(
+        "http://cealdapi-production.up.railway.app/guest",
+        {
+          name: guestName,
+        }
+      );
 
       const createdGuest = response.data;
 

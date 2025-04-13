@@ -58,7 +58,9 @@ export default function ListaAssistidos() {
 
   const fetchGuestList = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/guestList");
+      const response = await axios.get(
+        "http://cealdapi-production.up.railway.app/guestList"
+      );
       setGuestList(response.data);
     } catch (error) {
       console.error("Erro ao buscar lista de assistidos:", error);
