@@ -18,7 +18,7 @@ export default function GuestPage() {
     const checkAvailability = async () => {
       try {
         const response = await axios.get(
-          "https://cealdapi-production.up.railway.app/is-open"
+          "https://ceald-api.onrender.com/is-open"
         );
         setIsOpen(response.data.isOpen);
       } catch (error) {

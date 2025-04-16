@@ -59,7 +59,7 @@ export default function ListaAssistidos() {
   const fetchGuestList = async () => {
     try {
       const response = await axios.get(
-        "https://cealdapi-production.up.railway.app/guestList"
+        "https://ceald-api.onrender.com/guestList"
       );
       setGuestList(response.data);
     } catch (error) {
