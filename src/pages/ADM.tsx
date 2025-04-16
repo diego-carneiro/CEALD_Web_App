@@ -53,7 +53,7 @@ const GuestListPDF = ({ data }: { data: Guest[] }) => (
   </Document>
 );
 
-export default function ListaAssistidos() {
+export default function ADM() {
   const [guestList, setGuestList] = useState<Guest[]>([]);
 
   const fetchGuestList = async () => {
@@ -77,22 +77,22 @@ export default function ListaAssistidos() {
     <div className="min-h-screen bg-zinc-100 px-6 py-8">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-row items-center gap-4 mb-6 md:flex-row md:justify-between md:items-center">
           <img
-            className="w-12 h-auto"
-            src="src/assets/img/cealdlogo.png"
+            className="h-8 w-auto md:h-12"
+            src="/assets/img/cealdlogo.png"
             alt="Logo CEALD"
           />
-          <h1 className="text-2xl font-bold text-center flex-1">
+          <h1 className="text-xl font-bold text-center hidden md:block">
             Lista de assistidos
           </h1>
-          <div className="w-32 text-right">
+          <div className="w-full md:w-auto">
             <PDFDownloadLink
               document={<GuestListPDF data={guestList} />}
               fileName="lista-de-assistidos.pdf"
             >
               {({ loading }) => (
-                <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+                <Button className="w-20 h-8 px-3 text-sm md:w-auto md:h-10 md:px-4 md:text-base bg-blue-500 hover:bg-blue-600 text-white">
                   {loading ? "Gerando..." : "Imprimir"}
                 </Button>
               )}
