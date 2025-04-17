@@ -55,21 +55,25 @@ const GuestListPDF = ({ data }: { data: Guest[] }) => (
 
 export default function ADM() {
   const [guestList, setGuestList] = useState<Guest[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchGuestList = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(
         "https://ceald-api.onrender.com/guestList"
       );
       setGuestList(response.data);
     } catch (error) {
       console.error("Erro ao buscar lista de assistidos:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchGuestList();
-    const interval = setInterval(fetchGuestList, 10000);
+    fetchGuestList(); // Requisição imediata
+    const interval = setInterval(fetchGuestList, 10000); // Atualizações a cada 10s
     return () => clearInterval(interval);
   }, []);
 
@@ -77,7 +81,7 @@ export default function ADM() {
     <div className="min-h-screen bg-zinc-100 px-6 py-8">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6">
         {/* Header */}
-        <div className="flex flex-row items-center gap-4 mb-6 md:flex-row md:justify-between md:items-center">
+        <div className="flex flex-col gap-4 mb-6 md:flex-row md:justify-between md:items-center">
           <img
             className="h-8 w-auto md:h-12"
             src="/assets/img/cealdlogo.png"
@@ -86,7 +90,17 @@ export default function ADM() {
           <h1 className="text-xl font-bold text-center hidden md:block">
             Lista de assistidos
           </h1>
-          <div className="w-full md:w-auto">
+          <div className="flex flex-col gap-2 md:flex-row md:gap-4 md:items-center">
+            {/* Botão de atualizar - visível apenas no desktop */}
+            <Button
+              onClick={fetchGuestList}
+              className="hidden md:inline-flex bg-gray-200 hover:bg-gray-300 text-gray-800"
+              disabled={loading}
+            >
+              {loading ? "Atualizando..." : "Atualizar"}
+            </Button>
+
+            {/* Botão de imprimir PDF */}
             <PDFDownloadLink
               document={<GuestListPDF data={guestList} />}
               fileName="lista-de-assistidos.pdf"
