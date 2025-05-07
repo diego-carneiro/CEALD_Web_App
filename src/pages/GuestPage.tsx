@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 
 export default function GuestPage() {
-  const [isOpen, setIsOpen] = useState<boolean | null>(null);
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     const checkAvailability = async () => {
