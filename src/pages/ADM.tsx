@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 import {
   Table,
   TableBody,
@@ -18,12 +20,10 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 
-// Tipagem dos dados recebidos
 type Guest = {
   name: string;
 };
 
-// Estilos do PDF
 const styles = StyleSheet.create({
   page: {
     padding: 24,
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// Componente PDF com dados
 const GuestListPDF = ({ data }: { data: Guest[] }) => (
   <Document>
     <Page size="A4" style={styles.page}>
@@ -57,6 +56,8 @@ export default function ADM() {
   const [guestList, setGuestList] = useState<Guest[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const formattedDate = dayjs().format("DD-MM-YYYY");
+
   const fetchGuestList = async () => {
     try {
       setLoading(true);
@@ -72,9 +73,7 @@ export default function ADM() {
   };
 
   useEffect(() => {
-    fetchGuestList(); // Requisição imediata
-    const interval = setInterval(fetchGuestList, 10000); // Atualizações a cada 10s
-    return () => clearInterval(interval);
+    fetchGuestList();
   }, []);
 
   return (
@@ -100,10 +99,9 @@ export default function ADM() {
               {loading ? "Atualizando..." : "Atualizar"}
             </Button>
 
-            {/* Botão de imprimir PDF */}
             <PDFDownloadLink
               document={<GuestListPDF data={guestList} />}
-              fileName="lista-de-assistidos.pdf"
+              fileName={`lista-de-assistidos-${formattedDate}.pdf`}
             >
               {({ loading }) => (
                 <Button className="w-20 h-8 px-3 text-sm md:w-auto md:h-10 md:px-4 md:text-base bg-blue-500 hover:bg-blue-600 text-white">
