@@ -45,7 +45,7 @@ export default function GuestPage() {
   }, []);
 
   if (isOpen === null) {
-    return null; // ou loading
+    return null;
   }
 
   return (

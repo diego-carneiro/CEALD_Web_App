@@ -38,8 +38,6 @@ export default function NomeSenhaScreen() {
 
       const createdGuest = response.data;
 
-      console.log("Guest criado:", createdGuest);
-
       setPosition(createdGuest.position);
       setShowDialog(true);
       setGuestName("");
