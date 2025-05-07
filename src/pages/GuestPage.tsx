@@ -3,13 +3,13 @@ import GuestTickets from "@/components/GuestTickets";
 import axios from "axios";
 import dayjs from "dayjs";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogDescription,
+// } from "@/components/ui/dialog";
 
 export default function GuestPage() {
   const [isOpen, setIsOpen] = useState(true);
@@ -67,21 +67,7 @@ export default function GuestPage() {
     //   )}
     // </>
     <>
-      {!isOpen ? (
-        <Dialog open>
-          <DialogContent className="bg-zinc-100">
-            <DialogHeader>
-              <DialogTitle>Horário Encerrado</DialogTitle>
-              <DialogDescription className="text-zinc-700 text-justify mt-2">
-                O intervalo para a retirada de senhas se encerrou. Por favor,
-                volte em outro horário.
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      ) : (
-        <GuestTickets />
-      )}
+      <GuestTickets />
     </>
   );
 
