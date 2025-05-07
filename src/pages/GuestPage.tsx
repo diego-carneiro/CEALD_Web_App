@@ -49,6 +49,23 @@ export default function GuestPage() {
   }
 
   return (
+    // <>
+    //   {!isOpen ? (
+    //     <Dialog open>
+    //       <DialogContent className="bg-zinc-100">
+    //         <DialogHeader>
+    //           <DialogTitle>Horário Encerrado</DialogTitle>
+    //           <DialogDescription className="text-zinc-700 text-justify mt-2">
+    //             O intervalo para a retirada de senhas se encerrou. Por favor,
+    //             volte em outro horário.
+    //           </DialogDescription>
+    //         </DialogHeader>
+    //       </DialogContent>
+    //     </Dialog>
+    //   ) : (
+    //     <GuestTickets />
+    //   )}
+    // </>
     <>
       {!isOpen ? (
         <Dialog open>
