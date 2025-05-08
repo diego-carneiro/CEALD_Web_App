@@ -14,9 +14,10 @@ import {
 
 export default function GuestTickets() {
   const [guestName, setGuestName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(""); // Novo estado
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [showPhoneErrorDialog, setShowPhoneErrorDialog] = useState(false);
   const [position, setPosition] = useState<number | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -29,6 +30,12 @@ export default function GuestTickets() {
 
     if (!phoneNumber.trim()) {
       alert("Por favor, insira um número de celular com DDD.");
+      return;
+    }
+
+    const phoneRegex = /^\(\d{2}\)\s9\d{4}-\d{4}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+      alert("Número inválido. Use o formato (XX) 9XXXX-XXXX, incluindo o DDD.");
       return;
     }
 
@@ -49,12 +56,34 @@ export default function GuestTickets() {
       setShowDialog(true);
       setGuestName("");
       setPhoneNumber("");
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao gerar senha. Tente novamente.");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (
+        error.response?.status === 400 &&
+        error.response?.data === "Guest with this phone number already exists"
+      ) {
+        setShowPhoneErrorDialog(true);
+      } else {
+        console.error(error);
+        alert("Erro ao gerar senha. Tente novamente.");
+      }
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const formatPhoneNumber = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 11);
+    if (digits.length < 3) return digits;
+    if (digits.length <= 7) {
+      return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    }
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setPhoneNumber(formatted);
   };
 
   return (
@@ -72,6 +101,20 @@ export default function GuestTickets() {
             <p className="mt-6 text-justify text-base text-zinc-700">
               Por gentileza, lembre-se de sua senha. Tenha um ótimo atendimento!
             </p>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={showPhoneErrorDialog}
+        onOpenChange={setShowPhoneErrorDialog}
+      >
+        <DialogContent className="bg-red-100 border-red-300">
+          <DialogHeader>
+            <DialogTitle className="text-red-600">Erro</DialogTitle>
+            <DialogDescription className="text-base text-zinc-700 mt-4">
+              O número de celular deve ser único por consulente.
+            </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>
@@ -110,8 +153,8 @@ export default function GuestTickets() {
                 id="telefone"
                 type="tel"
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="(DDD) 90000-0000"
+                onChange={handlePhoneChange}
+                placeholder="(99) 91234-5678"
                 className="text-lg"
                 disabled={isLoading}
               />
