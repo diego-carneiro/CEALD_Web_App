@@ -79,18 +79,17 @@ export default function ADM() {
   return (
     <div className="min-h-screen bg-zinc-100 px-6 py-8">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6">
-        {/* Header */}
         <div className="flex flex-col gap-4 mb-6 md:flex-row md:justify-between md:items-center">
           <img
-            className="h-8 w-auto md:h-12"
+            className="hidden md:block h-8 w-auto md:h-12"
             src="/assets/img/cealdlogo.png"
             alt="Logo CEALD"
           />
+
           <h1 className="text-xl font-bold text-center hidden md:block">
             Lista de assistidos
           </h1>
           <div className="flex flex-col gap-2 md:flex-row md:gap-4 md:items-center">
-            {/* Botão de atualizar - visível apenas no desktop */}
             <Button
               onClick={fetchGuestList}
               className="hidden md:inline-flex bg-gray-200 hover:bg-gray-300 text-gray-800"
@@ -112,7 +111,6 @@ export default function ADM() {
           </div>
         </div>
 
-        {/* Tabela */}
         <Table>
           <TableHeader>
             <TableRow>
