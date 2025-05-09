@@ -17,7 +17,7 @@ export default function GuestPage() {
     const now = dayjs();
     const currentHour = now.hour();
 
-    const isWithinAllowedTime = currentHour >= 12 && currentHour < 22;
+    const isWithinAllowedTime = currentHour >= 12 && currentHour < 19;
 
     setIsOpen(isWithinAllowedTime);
   }, []);
