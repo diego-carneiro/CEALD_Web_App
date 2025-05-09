@@ -84,7 +84,7 @@ export default function ADM() {
   const verifyPassword = async () => {
     try {
       const response = await axios.post(
-        "https://ceald-api.onrender.com/admin/admin-password",
+        "https://ceald-api.onrender.com/admin-password",
         {
           password: adminPassword,
         }
