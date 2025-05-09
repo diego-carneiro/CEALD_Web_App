@@ -104,7 +104,7 @@ export default function ADM() {
   return (
     <>
       <Dialog open={!showContent}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md bg-white">
           <DialogHeader>
             <DialogTitle>Senha de Administrador</DialogTitle>
           </DialogHeader>
