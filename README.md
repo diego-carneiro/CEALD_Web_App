@@ -10,10 +10,12 @@ Agora, com esta aplicação, os assistidos podem retirar sua senha do conforto d
 
 Trata-se de um projeto social e de caridade, sem fins lucrativos, voltado ao aprimoramento da experiência dos frequentadores e à organização das atividades da casa.
 
+
 🌐 Acesso à Aplicação
 
 O frontend está hospedado na Vercel e pode ser acessado através do link:
 👉 https://ceald-web-app.vercel.app/
+
 
 📱 Sobre o Projeto
 
@@ -28,11 +30,13 @@ Atualizar a lista em tempo real;
 
 Gerar um arquivo PDF com a lista atualizada para impressão.
 
+
 🕒 Horário de Funcionamento
 
 ⚠️ O sistema opera somente entre 12h e 16h.
 Fora desse horário, as requisições de retirada de senha não são aceitas.
 Essa limitação foi definida para respeitar o horário oficial de atendimento do centro espírita.
+
 
 🌱 Visão de Futuro
 
@@ -45,13 +49,15 @@ Divulgação de palestras e atividades da casa;
 
 Canal de comunicação direta com os assistidos.
 
+
 🚀 Próximas metas:
 Na próxima versão, está planejada a migração do frontend que consome a API em TypeScript para uma arquitetura serverless, utilizando o ecossistema AWS Amplify, com Cognito para autenticação e DynamoDB para persistência de dados.
 Essa evolução visa reduzir custos, aumentar a escalabilidade e simplificar o processo de implantação
 
-🧠 Tecnologias Utilizadas
-Frontend
 
+🧠 Tecnologias Utilizadas
+
+Frontend
 ⚛️ React
  + TypeScript
 
@@ -64,7 +70,6 @@ Frontend
 ☁️ Hospedagem: Vercel
 
 Backend
-
 🚀 Node.js
  + TypeScript
 
@@ -73,66 +78,6 @@ Backend
 
 🌐 API REST responsável pela comunicação com o frontend
 
-⚙️ Estrutura do Projeto
-📦 projeto-senhas-centro-espirita
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── hooks/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── App.tsx
-│   │   └── main.tsx
-│   ├── tailwind.config.ts
-│   └── tsconfig.json
-│
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   └── server.ts
-│   └── tsconfig.json
-│
-└── README.md
-
-🚀 Como Executar o Projeto Localmente
-Pré-requisitos
-
-Node.js v18+
-
-npm ou yarn
-
-Conta no MongoDB Atlas
-
-1️⃣ Clonar o repositório
-git clone https://github.com/seuusuario/projeto-senhas-centro-espirita.git
-cd projeto-senhas-centro-espirita
-
-2️⃣ Configurar o backend
-cd backend
-npm install
-
-
-Crie um arquivo .env com as variáveis:
-
-MONGO_URI=sua_url_do_mongodb_atlas
-PORT=5000
-ADMIN_PASSWORD=sua_senha_de_admin
-
-
-Inicie o servidor:
-
-npm run dev
-
-3️⃣ Configurar o frontend
-cd ../frontend
-npm install
-npm run dev
-
-
-Acesse o aplicativo em:
-👉 http://localhost:5173
 
 🧾 Funcionalidades
 
@@ -144,6 +89,7 @@ Acesse o aplicativo em:
 ✅ Restrição de funcionamento por horário (12h–16h)
 ✅ Uso simples e acessível em dispositivos móveis
 ✅ Hospedagem estável e gratuita via Vercel
+
 
 📄 Licença
 
