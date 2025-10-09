@@ -17,7 +17,7 @@ export default function GuestPage() {
     const now = dayjs();
     const currentHour = now.hour();
 
-    const isWithinAllowedTime = currentHour >= 12 && currentHour < 19;
+    const isWithinAllowedTime = currentHour >= 12 && currentHour < 16;
 
     setIsOpen(isWithinAllowedTime);
   }, []);
@@ -35,7 +35,7 @@ export default function GuestPage() {
               <DialogTitle>Horário Encerrado</DialogTitle>
               <DialogDescription className="text-zinc-700 text-justify mt-2">
                 O intervalo para a retirada de senhas se encerrou. Por favor,
-                volte entre 12h e 20h.
+                volte entre 12h e 16h.
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
