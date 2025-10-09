@@ -1,4 +1,5 @@
-Sistema de Retirada de Senhas 
+# **Sistema de Retirada de Senhas**
+
 
 Uma aplicação web desenvolvida com React + TypeScript, com o propósito de facilitar e humanizar o atendimento em um centro espírita.
 O sistema foi criado para resolver um problema real enfrentado pelos assistidos da casa:
