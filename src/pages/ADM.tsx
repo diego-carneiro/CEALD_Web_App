@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
+import { Loader2, RotateCw } from "lucide-react";
 
 import {
   Dialog,
@@ -58,6 +59,7 @@ export default function ADM() {
   const [adminPassword, setAdminPassword] = useState("");
   const [showContent, setShowContent] = useState(false);
   const [authError, setAuthError] = useState("");
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const formattedDate = dayjs().format("DD-MM-YYYY");
 
@@ -65,7 +67,7 @@ export default function ADM() {
     try {
       setLoading(true);
       const response = await axios.get(
-        "https://ceald-api.onrender.com/guestList"
+        "https://ceald-api.onrender.com/guestList",
       );
       setGuestList(response.data);
     } catch (error) {
@@ -83,11 +85,14 @@ export default function ADM() {
 
   const verifyPassword = async () => {
     try {
+      setIsAuthenticating(true);
+      setAuthError("");
+
       const response = await axios.post(
         "https://ceald-api.onrender.com/admin-password",
         {
           password: adminPassword,
-        }
+        },
       );
 
       if (response.status === 200) {
@@ -98,24 +103,76 @@ export default function ADM() {
       }
     } catch (error) {
       setAuthError("Senha incorreta");
+    } finally {
+      setIsAuthenticating(false);
     }
   };
 
   return (
     <>
       <Dialog open={!showContent}>
-        <DialogContent className="sm:max-w-md bg-white">
-          <DialogHeader>
-            <DialogTitle>Senha de Administrador</DialogTitle>
+        <DialogContent className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 border-blue-500/20 sm:max-w-md [&>button]:hidden">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDMpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40 rounded-lg"></div>
+
+          <DialogHeader className="relative z-10 space-y-6">
+            <div className="flex justify-center mb-2">
+              <div className="flex justify-center mt-4">
+                <img
+                  className="w-40 md:w-52"
+                  src="/assets/img/cealdlogo.png"
+                  alt="Logo CEALD"
+                />
+              </div>
+            </div>
+
+            <DialogTitle className="text-center text-2xl font-bold bg-gradient-to-r from-blue-200 via-cyan-200 to-blue-200 bg-clip-text text-transparent">
+              Acesso Administrativo
+            </DialogTitle>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-blue-200">
+                  Senha de Administrador
+                </label>
+                <Input
+                  type="password"
+                  placeholder="Digite a senha"
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                  disabled={isAuthenticating}
+                  className="h-12 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400 mt-8"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !isAuthenticating) {
+                      verifyPassword();
+                    }
+                  }}
+                />
+              </div>
+
+              {authError && (
+                <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+                  <p className="text-red-300 text-sm text-center">
+                    {authError}
+                  </p>
+                </div>
+              )}
+
+              <Button
+                onClick={verifyPassword}
+                disabled={isAuthenticating}
+                className="w-full h-12 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold text-base shadow-lg shadow-blue-500/30 disabled:opacity-70"
+              >
+                {isAuthenticating ? (
+                  <span className="flex items-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Entrando...
+                  </span>
+                ) : (
+                  "Entrar"
+                )}
+              </Button>
+            </div>
           </DialogHeader>
-          <Input
-            type="password"
-            placeholder="Digite a senha"
-            value={adminPassword}
-            onChange={(e) => setAdminPassword(e.target.value)}
-          />
-          {authError && <p className="text-red-500 text-sm">{authError}</p>}
-          <Button onClick={verifyPassword}>Entrar</Button>
         </DialogContent>
       </Dialog>
 
@@ -132,10 +189,11 @@ export default function ADM() {
               <h1 className="text-xl font-bold text-center hidden md:block">
                 Lista de assistidos
               </h1>
-              <div className="flex flex-col gap-2 md:flex-row md:gap-4 md:items-center">
+
+              <div className="hidden md:flex md:gap-4 md:items-center">
                 <Button
                   onClick={fetchGuestList}
-                  className="hidden md:inline-flex bg-gray-200 hover:bg-gray-300 text-gray-800"
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-800"
                   disabled={loading}
                 >
                   {loading ? "Atualizando..." : "Atualizar"}
@@ -146,7 +204,30 @@ export default function ADM() {
                   fileName={`lista-de-assistidos-${formattedDate}.pdf`}
                 >
                   {({ loading }) => (
-                    <Button className="w-20 h-8 px-3 text-sm md:w-auto md:h-10 md:px-4 md:text-base bg-blue-500 hover:bg-blue-600 text-white">
+                    <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+                      {loading ? "Gerando..." : "Imprimir"}
+                    </Button>
+                  )}
+                </PDFDownloadLink>
+              </div>
+
+              <div className="flex md:hidden gap-2 items-center justify-end">
+                <Button
+                  onClick={fetchGuestList}
+                  className="w-10 h-10 p-0 bg-gray-200 hover:bg-gray-300 text-gray-800 flex items-center justify-center"
+                  disabled={loading}
+                >
+                  <RotateCw
+                    className={`w-5 h-5 ${loading ? "animate-spin" : ""}`}
+                  />
+                </Button>
+
+                <PDFDownloadLink
+                  document={<GuestListPDF data={guestList} />}
+                  fileName={`lista-de-assistidos-${formattedDate}.pdf`}
+                >
+                  {({ loading }) => (
+                    <Button className="h-10 px-4 bg-blue-500 hover:bg-blue-600 text-white">
                       {loading ? "Gerando..." : "Imprimir"}
                     </Button>
                   )}
