@@ -2,15 +2,23 @@ import { useEffect, useState } from "react";
 import GuestTickets from "@/components/GuestTickets";
 import dayjs from "dayjs";
 import { Clock, AlertCircle } from "lucide-react";
+import isBetween from "dayjs/plugin/isBetween";
+dayjs.extend(isBetween);
 
 export default function GuestPage() {
   const [isOpen, setIsOpen] = useState<boolean | null>(null);
 
   useEffect(() => {
     const now = dayjs();
-    const currentHour = now.hour();
-    const isWithinAllowedTime = currentHour >= 12 && currentHour < 14;
-    setIsOpen(isWithinAllowedTime);
+
+    const isThursday = now.day() === 4;
+
+    const startTime = now.startOf("day").add(12, "hour");
+    const endTime = now.startOf("day").add(14, "hour");
+
+    const isWithinAllowedTime = now.isBetween(startTime, endTime, null, "[)");
+
+    setIsOpen(isThursday && isWithinAllowedTime);
   }, []);
 
   if (isOpen === null) return null;
